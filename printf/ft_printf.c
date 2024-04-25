@@ -6,7 +6,7 @@
 /*   By: gblanca- <gblanca-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:58:06 by gblanca-          #+#    #+#             */
-/*   Updated: 2024/04/23 14:42:50 by gblanca-         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:40:53 by gblanca-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	ft_printf(const char *str, ...)
 			aux = ft_handle_args(&ptr,*str);
 			if (aux >= 0)
 				count += aux;
-			else
-				str--;
 		}
 		else
 		{

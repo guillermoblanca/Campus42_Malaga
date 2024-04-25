@@ -6,7 +6,7 @@
 /*   By: gblanca- <gblanca-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:42:49 by gblanca-          #+#    #+#             */
-/*   Updated: 2024/04/23 14:50:03 by gblanca-         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:29:34 by gblanca-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,39 @@ int	ft_printchr(va_list *ptr)
 	return (1);
 }
 
+static void	ft_recursive_ptr(uintptr_t num)
+{
+	char	c;
+
+	if (num >= 16)
+	{
+		ft_recursive_ptr(num / 16);
+		ft_recursive_ptr(num % 16);
+	}
+	else
+	{
+		c = num - 10 + 'a';
+		if (num <= 9)
+			c = (num + '0');
+		write(1, &c, 1);
+	}
+}
+
 /// @brief TODO: Implement
 /// @param ptr 
 /// @return 
 int	ft_printptr(va_list *ptr)
 {
-	uint32_t	ptr_ptr;
+	uintptr_t	num;
 
-	ptr_ptr = va_arg(*ptr, uint32_t);
-	write(1, "{Requires implementation}", 25);
-	return (-1);
+	num = va_arg(*ptr, uintptr_t);
+	write(1, "0x", 2);
+	if (num == 0)
+	{
+		write(1, "0", 1);
+		return (3);
+	}
+	else
+		ft_recursive_ptr(num);
+	return (ft_hexlen(num) + 2);
 }

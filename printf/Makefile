@@ -11,6 +11,7 @@ FT_FILES := ft_printf.c \
 ft_handle_args.c \
 ft_printhex.c \
 ft_printnbr.c \
+ft_uprintnbr.c \
 ft_utils.c \
 
 #Archivo de testeo para funciones
@@ -47,7 +48,7 @@ re : fclean all
 #	$(AR) $(AR_FLAGS) $(NAME) $?
 
 test:  all
-	$(CC) $(CC_FLAGS) -I $(INCLUDES) -o $@ main.c $(NAME)
+	$(CC) $(CC_FLAGS -g) -I $(INCLUDES) -o $@ main.c $(NAME)
 	$(clean)
 
 testc: all test clean

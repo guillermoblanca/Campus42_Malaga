@@ -1,71 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printnbr.c                                      :+:      :+:    :+:   */
+/*   ft_uprintnbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gblanca- <gblanca-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 13:23:39 by gblanca-          #+#    #+#             */
-/*   Updated: 2024/04/24 14:55:47 by gblanca-         ###   ########.fr       */
+/*   Created: 2024/04/24 14:52:42 by gblanca-          #+#    #+#             */
+/*   Updated: 2024/04/24 14:58:13 by gblanca-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_putnbr_fd(int n, int fd);
+static int	ft_unumlen(unsigned int n);
 
-static int	ft_numlen(int n);
+static void	ft_uputnbr_fd(unsigned int n, int fd);
 
-int	ft_printnbr(va_list *ptr)
+int	ft_printunbr(va_list *ptr)
 {
-	int	n;
-	int	len;
+	unsigned int	n;
+	int				len;
 
-	n = va_arg(*ptr, int);
-	len = ft_numlen(n);
-	ft_putnbr_fd(n, 1);
+	n = va_arg(*ptr, unsigned int);
+	len = ft_unumlen(n);
+	ft_uputnbr_fd(n, 1);
 	return (len);
 }
 
-int	ft_numlen(int n)
+static int	ft_unumlen(unsigned int n)
 {
-	int	len;
+	int	c;
 
-	len = 1;
-	if (n == -2147483648)
-	{
-		return (11);
-	}
-	if (n < 0)
-	{
-		len++;
-		n = -n;
-	}
+	c = 1;
 	while (n >= 10)
 	{
+		c++;
 		n /= 10;
-		len++;
 	}
-	return (len);
+	return (c);
 }
 
-static void	ft_putnbr_fd(int n, int fd)
+static void	ft_uputnbr_fd(unsigned int n, int fd)
 {
 	char	c;
 
-	if (n == -2147483648)
+	if (n == 4294967295)
 	{
-		write(fd, &"-2147483648", 11);
+		write(fd, &"4294967295", 10);
 		return ;
-	}
-	if (n < 0)
-	{
-		write(fd, &"-", 1);
-		n = -n;
 	}
 	if (n >= 10)
 	{
-		ft_putnbr_fd(n / 10, fd);
+		ft_uputnbr_fd(n / 10, fd);
 		n = n % 10;
 	}
 	if (n < 10)

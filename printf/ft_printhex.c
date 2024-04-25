@@ -6,13 +6,28 @@
 /*   By: gblanca- <gblanca-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:01:28 by gblanca-          #+#    #+#             */
-/*   Updated: 2024/04/23 13:25:20 by gblanca-         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:25:35 by gblanca-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_printhex(unsigned int nbr)
+int	ft_hexlen(unsigned long num)
+{
+	int	c;
+
+	c = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		c++;
+		num /= 16;
+	}
+	return (c);
+}
+
+void	ft_printupperhex(unsigned int nbr)
 {
 	unsigned int	remainder;
 	char			c;
@@ -24,16 +39,38 @@ void	ft_printhex(unsigned int nbr)
 			c = '0' + remainder;
 		else
 			c = '7' + remainder;
-		ft_printhex(nbr / 16);
+		ft_printupperhex(nbr / 16);
 		write(1, &c, 1);
 	}
 }
 
-int	ft_printnumbertohex(va_list *ptr)
+void	ft_printlowerhex(unsigned int nbr)
+{
+	unsigned int	remainder;
+	char			c;
+
+	if (nbr != 0)
+	{
+		remainder = nbr % 16;
+		if (remainder < 10)
+			c = '0' + remainder;
+		else
+			c = '7' + remainder + 32;
+		ft_printlowerhex(nbr / 16);
+		write(1, &c, 1);
+	}
+}
+
+int	ft_printnumbertohex(va_list *ptr, int isupper)
 {
 	unsigned int	nbr;
 
 	nbr = va_arg(*ptr, unsigned int);
-	ft_printhex(nbr);
-	return (1);
+	if (nbr == 0)
+		write(1, &"0", 1);
+	if (isupper)
+		ft_printupperhex(nbr);
+	else
+		ft_printlowerhex(nbr);
+	return (ft_hexlen(nbr));
 }

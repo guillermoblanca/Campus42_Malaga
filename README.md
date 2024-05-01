@@ -11,6 +11,12 @@ Para aprender unas buenas prácticas de codificación se hace uso de *norminette
 * Uso de tabulaciones en variables y en funciones
 * Todos los archivos deben contener una cabecera con el nombre del script, alumno, fecha de creación y última modificación
 
+## Makefile 
+
+La mayoría de proyectos hacen uso de [makefiles](https://hernandis.me/2017/03/20/como-hacer-un-makefile.html) por lo que
+la mayoría de proyectos contienen un archivo Makefile en la carpeta para poder compilarlos, en algunos casos he añadido 
+un comando test y testc (test + clean) para poder ejecutar pruebas en las librerías con un archivo *main.c* 
+
 ## Libft 125/125 🟢🟢🟢
 Esta librería está diseñada para replicar el comportamiento de stdlib y stdio usando solo las siguientes funciones:
 

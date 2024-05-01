@@ -30,7 +30,7 @@ En este proyecto se replica el comportamiento de la función printf de forma que
 
 En este proyecto se debe crear una función que permita, mediante un [file descriptor](https://www.lenovo.com/us/en/glossary/file-descriptor/#:~:text=A%20file%20descriptor%20is%20a,(I%2FO)%20resources.) leer un archivo y que devuelva la siguiente línea, solo debe haber una [variable estática](https://www.geeksforgeeks.org/static-variables-in-c/)  
 
-##Enlaces de interés 
+## Enlaces de interés 
 
 * [GeeksforGeeks](https://www.geeksforgeeks.org/) mi página de referencia con guías para C, otros lenguajes y diferentes tipos de algoritmos. 
 * Mi perfil en la [Intra](https://profile.intra.42.fr/users/gblanca-)💻

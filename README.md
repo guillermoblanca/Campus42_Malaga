@@ -38,6 +38,6 @@ En este proyecto se debe crear una función que permita, mediante un [file descr
 
 ## Enlaces de interés 
 
-* [Mi Gitbook de varios proyectos y utilidades](https://app.gitbook.com/invite/Kct85UyRpu0v0L3eJH99/fLbjHq6z8ujMYPyrEozO)
+* [Mi Gitbook de varios proyectos y utilidades](https://guilleblanca.gitbook.io/como-hacer-un-makefile/)
 * [GeeksforGeeks](https://www.geeksforgeeks.org/) mi página de referencia con guías para C, otros lenguajes y diferentes tipos de algoritmos. 
 * Mi perfil en la [Intra](https://profile.intra.42.fr/users/gblanca-)💻

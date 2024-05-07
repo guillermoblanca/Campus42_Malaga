@@ -29,13 +29,13 @@ static void	recieve_message(int signum)
 	}
 	if (signum == SIGUSR1)
 	{
-		c <<= 1;
+		c = c << 1 & 1;
 		write(1, &"1", 1);
 	}
 	else
 	{
 		write(1, &"0", 1);
-		c <<= 0;
+		c = c << 1 & 0;
 	}
 	*n = *n + 1;
 	if (*n == 8)

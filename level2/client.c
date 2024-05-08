@@ -6,7 +6,7 @@
 /*   By: gblanca- <gblanca-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:34:24 by gblanca-          #+#    #+#             */
-/*   Updated: 2024/05/07 12:47:41 by gblanca-         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:16:14 by gblanca-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	send_signal(pid_t pid, unsigned char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		usleep(42);
 	}
 	printf("\n");
 }

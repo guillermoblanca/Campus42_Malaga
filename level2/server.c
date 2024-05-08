@@ -6,7 +6,7 @@
 /*   By: gblanca- <gblanca-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:34:47 by gblanca-          #+#    #+#             */
-/*   Updated: 2024/05/07 14:46:56 by gblanca-         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:21:11 by gblanca-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,32 @@
 #include <string.h>
 #include "libraries/libft/libft.h"
 
-static void	recieve_message(int signum)
+static void	receive_message(int signum, siginfo_t *info, void *context)
 {
 	static int *n;
 	static char c;
+	static pid_t pid;
 
+	if (pid != info->si_pid && pid != 0)
+		return ;
 	if (n == NULL)
 	{
 		n = (int *) malloc(sizeof(int));
 		*n = 0;
 		c = 0;
+		pid = 0;
 	}
+	pid = info->si_pid;
 	if (signum == SIGUSR1)
-	{
-		c = c << 1 & 1;
-		write(1, &"1", 1);
-	}
+		c = (c << 1) | 1;
 	else
-	{
-		write(1, &"0", 1);
-		c = c << 1 & 0;
-	}
+		c = (c << 1) | 0;
 	*n = *n + 1;
 	if (*n == 8)
 	{
 		write(1, &c, 1);
-		write(1, "--> recieved!", 14);
-		ft_putnbr_fd(1, ft_itoa(c));
-		write(1, "\n", 1);
 		*n = 0;
 		c = 0;
-
 	}
 }
 
@@ -55,17 +50,17 @@ int	main(void)
 	struct sigaction	sa;
 	struct sigaction	sa2;
 
-	sa.sa_handler = recieve_message;
+	sa.sa_flags = SA_SIGINFO;
+	sa.sa_sigaction = receive_message;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
 	{
 		printf("Cannot set SIGUSR1 signal...\n");
 		return (-1);
 	}
-	sa2.sa_handler = recieve_message;
+	sa.sa_flags = SA_SIGINFO;
+	sa2.sa_sigaction = receive_message;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
 	if (sigaction(SIGUSR2, &sa, NULL) == -1)
 	{
 		printf("Cannot set SIGUSR2 signal... \n");

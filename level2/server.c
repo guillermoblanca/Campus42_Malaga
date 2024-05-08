@@ -14,33 +14,27 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "libraries/libft/libft.h"
+#include "libft/libft.h"
 
-static void	receive_message(int signum, siginfo_t *info, void *context)
+static void	receive_message(int signum)
 {
-	static int *n;
+	static int n;
 	static char c;
-	static pid_t pid;
 
-	if (pid != info->si_pid && pid != 0)
-		return ;
-	if (n == NULL)
+	if (signum == -1)
 	{
-		n = (int *) malloc(sizeof(int));
-		*n = 0;
+		n = 0;
 		c = 0;
-		pid = 0;
 	}
-	pid = info->si_pid;
 	if (signum == SIGUSR1)
 		c = (c << 1) | 1;
 	else
 		c = (c << 1) | 0;
-	*n = *n + 1;
-	if (*n == 8)
+	n++;
+	if (n == 8)
 	{
 		write(1, &c, 1);
-		*n = 0;
+		n = 0;
 		c = 0;
 	}
 }
@@ -48,29 +42,16 @@ static void	receive_message(int signum, siginfo_t *info, void *context)
 int	main(void)
 {
 	struct sigaction	sa;
-	struct sigaction	sa2;
 
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = receive_message;
-	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = receive_message;
+	sa.sa_flags = SA_RESTART;
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-	{
-		printf("Cannot set SIGUSR1 signal...\n");
-		return (-1);
-	}
-	sa.sa_flags = SA_SIGINFO;
-	sa2.sa_sigaction = receive_message;
-	sigemptyset(&sa.sa_mask);
+		exit(EXIT_FAILURE);
 	if (sigaction(SIGUSR2, &sa, NULL) == -1)
-	{
-		printf("Cannot set SIGUSR2 signal... \n");
-		return (-1);
-	}
-	printf("Server initialized... \n");
+		exit(EXIT_FAILURE);
+	printf("%sServer initialized...%s\n",GREEN, NC);
 	printf("PID: %d \n", getpid());
 	while (1)
-	{
-		sleep(10);
-	}
+		pause();
 	return (0);
 }
